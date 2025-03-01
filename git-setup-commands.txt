@@ -1,0 +1,42 @@
+Download and Install Git
+https://git-scm.com/
+
+
+Git commands
+------------------
+git config --global user.name "<-user name->"
+git config --global user.email "<-user email->"
+git config --list
+
+git clone <repo link>
+git status
+	(untracked, modified, staged, unmodified)
+	git add <file name>
+git commit -m "commit message"
+git push origin main
+git init
+git remote add origin <-link->
+git remote -v (verify origin)
+git branch
+git branch -M main (rename b)
+git push -U origin main
+	(always push on main branch for subsequent git push command)
+git checkout <-branch name->
+git checkout -b <-branch name->
+	(creates new branch)
+git checkout -b <-branch name->
+	(deletes a branch)
+git diff <-branch name->
+	(compares diff with current checked out branch)
+git merge <-branch name->
+	(similar to PR) 
+git pull origin <- branch name->
+git reset <-file name->
+	(revert uncommited changes)
+git reset HEAD~1
+	(commited single change)
+git reset HEAD~1
+	(commited single change)
+git reset <-commit hash->
+	(has of commit after which all changes will be removed)
+fork -> copy code from another account to your account - later can raise PR to original code
