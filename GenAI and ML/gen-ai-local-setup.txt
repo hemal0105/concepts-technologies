@@ -1,0 +1,35 @@
+Download and Install python
+    https://www.python.org/downloads/release/python-3124/
+
+    python -V
+        (check python version)
+
+Download and Install MiniConda
+    https://docs.conda.io/projects/conda/en/latest/index.html#    
+
+    Add conda to environment variables path
+
+    conda -V
+        (check conda version)
+    conda env list
+    conda create -n ml python=3.12.4 -y
+    conda activate
+    conda config --set auto_activate_base false
+    conda activate ml
+    pip install -r .\requrement.txt
+        (requrement.txt has all the needed packages for langchain, ollama other utils)
+
+Get pytorch
+    https://pytorch.org/get-started/locally/
+        (link has all versions)
+
+    conda install pytorch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1  pytorch-cuda=11.8 -c pytorch -c nvidia
+        (run this command to install specific version)
+
+
+Check if machine has GPU support and has CUDA cores
+    import torch
+    torch.cuda.is_available()
+
+Download and Install Ollama
+    https://ollama.com/download
