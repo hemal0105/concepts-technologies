@@ -1,1 +1,2 @@
-Development Setup Steps for ddifferent tools and commands are added into this repo
+Development Setup Steps for different tools and commands are added into this repo
+This steps are for Windows operating systems
