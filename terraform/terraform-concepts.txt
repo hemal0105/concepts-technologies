@@ -13,11 +13,23 @@ terraform plan
 terraform apply
     (shows execution plan again and upon user confirmation, creates resources)
 terraform show
-    (shows details of the created resources)
+    (shows details of the created resource)
+terraform show -json
+    (shows details of the created resource in json form)
 terraform destroy
     (deletes created resources mentioned in tf file)
 terraform output
     (prints all output variables data)
+terraform validate
+    (validate the tf config files)
+terraform fmt
+    (formats tf files to improve readability)
+terraform providers
+    (see list of all providers used in config directory)
+terraform apply -refresh-only
+    (refresh state file with changes done outside of terraform manually)
+terraform graph
+    (creates resource dependency graph)
 ==================
 
 terraform providers can be found from
@@ -101,5 +113,59 @@ variables can be set by diff ways but has precedence like below (low to high pri
 =================
 output of one resource can be part of input of other resource
 can define depends_on attribute to define explicite dependencies
-=========
+=================
 there are also output variables which stores output of a resource data
+=================
+
+Terraform state
+    when first time terraform apply command is run, terraform.tfstate file gets created
+    it has complete record of created infra resource into json form
+    when any changes, it compares with state file and mofifies resources
+    while removing resouces, it would check from previous state for any dependencies and determine order of destroy accordingly
+    uses state to verify real world infra for every apply, this would improve performance
+    state is non optional feature
+    for maintaining latest states across multiple developers, it can be stored remotly
+    state files can have sensitive info like IPs, secrets etc. so its not recommended to store it in git or code repo
+    it should be store in remote state backend like s3 or terraform cloud
+    its not recommended to manually change state file
+
+Immutable Infrastructure
+    avoids configuration drift
+    easier to version the infra and roll back in case of any issue
+
+Lifecycle rules
+    can be used to create updated version first and then older version to be deleted
+    or do not delete older version at all
+    syntax is to use Lifecycle block inside resource
+        lifecycle {
+            create_before_destroy = true
+                or
+            prevent_destroy = true
+                or
+            ignore_changes = all
+        }
+
+Datasources
+    allows terraform to read the data from resouces which are created outside of the terraform
+    this data can be referenced into other resources
+
+Meta Arguments
+    can be used into any resource block to change the behaviour of the resources
+    like creating loops or count to create same resouce multiple times
+        add count = 3 in resource block
+        resource "local_file" "pet" {
+            filename = var.filename[count.index]
+            count = length(var.filename)
+        }
+
+        variable "filename" {
+            default = [ "pets.txt", "dogs.txt", "cats.txt" ]
+        }
+    here if 1st file name is removed, it will change other two  files as well even there is no change
+    to avoid this we can use for_each
+
+Version Constraints
+    by default init command fetchs latest version of providers
+    we can use required_providers block containing all provider names and its versions
+    
+

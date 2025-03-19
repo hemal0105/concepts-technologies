@@ -13,3 +13,7 @@ output "pet-name" {
   value = random_pet.my-pet.id
   description = "pet name"
 }
+
+data "local_file" "dog" {
+  filename = "data/dog.txt"
+}
