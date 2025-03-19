@@ -1,0 +1,24 @@
+Download Terraform, extract and add into System variables path
+    https://www.terraform.io/
+
+    terraform version
+        (check version and correctness of setup)
+
+=================
+
+terraform init
+    (Initializes provider plugins)
+terraform plan
+    (generates and shows terraform execution plan)
+terraform apply
+    (shows execution plan again and upon user confirmation, creates resources)
+terraform show
+    (shows details of the created resources)
+terraform destroy
+    (deletes created resources mentioned in tf file)
+
+==================
+
+terraform providers can be found from
+    https://registry.terraform.io/browse/providers
+
