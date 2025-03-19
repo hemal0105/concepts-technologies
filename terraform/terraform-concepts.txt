@@ -16,9 +16,90 @@ terraform show
     (shows details of the created resources)
 terraform destroy
     (deletes created resources mentioned in tf file)
-
+terraform output
+    (prints all output variables data)
 ==================
 
 terraform providers can be found from
     https://registry.terraform.io/browse/providers
 
+terraform has following type of providers
+    official: 
+        owned and maintained by HashiCorp
+        aws, gcp, azure or local
+    partner: 
+        owned and maintained by third party company which gone through partner provider process of HashiCorp
+        bigip, heroku, digitalocean
+    community:
+        owned and maintained by individual members of community
+
+terraform configuration directory can have any number of .tf files and apply command will create resources from all .tf
+all resources can also be combined into a common .tf file and general naming convention followed for it is main.tf
+
+variable can have 
+    default value, 
+    type
+        string, number, boolean, any (default), list, map, set, object, tuple
+    description
+================================
+example: list
+    variable "prefix" {
+        default = ["Mr", "Mrs", "Sir"]
+        type = list(string)
+    }
+
+    resource "random_pet" "my-pet" {
+        prefix = var.prefix[0]
+    }
+
+example: map
+    variable file-content {
+        type = map(string)
+        default = {
+            "statement1": "We love pets!"
+            "statement1": "We love animals!"
+        }
+    }
+
+    resource local-file my-pet {
+        filename = "data/pets.txt"
+        content = var.file-content["statement1"]
+    }
+
+example: object
+    variable "bella" {
+        type = object({
+            name = string
+            color = string
+            age = number
+            food = list(string)
+            favorite_pet = bool
+        })
+
+        default = {
+            name = "bella"
+            color = "brown"
+            age = 7
+            food = ["myfood1", "myfood2"]
+            favorite_pet = true
+        }
+    }
+example: tuple
+    variable kitty {
+        type = tuple(string, number, bool)
+        default = ["cat", 7, true]
+    }
+================
+variables can also be added to .tfvars variable defination files
+    if terraform.tfvars or *.auto.tfvars then auto loaded during apply
+    else need to add like terraform apply -var-file variables.tfvars
+variables can be set by diff ways but has precedence like below (low to high prio)
+    environment variables
+    terraform.tfvars
+    *.auto.tfvars (alpha order)
+    -var or -var-files (command line flags)
+=================
+output of one resource can be part of input of other resource
+can define depends_on attribute to define explicite dependencies
+=========
+there are also output variables which stores output of a resource data
