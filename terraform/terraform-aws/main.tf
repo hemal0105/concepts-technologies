@@ -18,7 +18,7 @@ resource "aws_s3_bucket" "finance" {
     tags = { description = "Dummy Finance Data" }
 }
 
-resource "aws_s3_bucket_object" "finance-2025" {
+resource "aws_s3_object" "finance-2025" {
   content = "path/of/the/file/finance-2025.doc"
   key = "finance-2025.doc"
   bucket = aws_s3_bucket.finance.id
