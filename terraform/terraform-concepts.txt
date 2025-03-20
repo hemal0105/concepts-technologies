@@ -32,6 +32,10 @@ terraform graph
     (creates resource dependency graph)
 terraform import <resource id>
     (get resources created outside of terraform under the full control of terraform)
+terraform console
+    (opens interactive console)
+terraform workspace new <name of workspace> | list
+    (create new workspace)
 ==================
 
 terraform providers can be found from
@@ -206,4 +210,19 @@ Terraform Modules
     example: for creating ec2, we can keep instance type same but keep AMI as variable
     modules are like packages or libraries from other programming languages
     Modules can also be used from Terraform registry
-    
+
+Terraform functions
+    Numeric functions
+        max, min, ceil, floor
+    String functions
+        split, lower, upper, title, substr, join
+    Collection functions
+        length, index, keys and values - takes map as input, lookup
+
+Operators and conditional expressions
+    arithmetic, equalities, comparision, logical
+
+Terraform workspaces
+    a directory with config files can be used for multiple projects and this is called as workspace
+    to create a workspace, we can use terraform workspace command
+    each workspace has separate state files
