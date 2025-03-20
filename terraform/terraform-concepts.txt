@@ -167,5 +167,12 @@ Meta Arguments
 Version Constraints
     by default init command fetchs latest version of providers
     we can use required_providers block containing all provider names and its versions
-    
 
+AWS Terraform
+    provider "aws" {
+        region = "us-west-2"
+        access_key = "dummy-access-key"
+        secret_key = "dummy-secret-key" 
+    }
+    setting credentials in .tf file like above is not recommended as it can be checked into git
+    instead it can be set in .aws/credentials or via export command
