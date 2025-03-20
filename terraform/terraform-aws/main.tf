@@ -55,3 +55,9 @@ resource "aws_dynamodb_table_item" "cars-items" {
     }
   EOF
 }
+
+module "us_payroll" {
+  source = "path of the templates created"
+  app_region = "us-east-1"
+  ami = "ami-123e4"
+} 

@@ -30,6 +30,8 @@ terraform apply -refresh-only
     (refresh state file with changes done outside of terraform manually)
 terraform graph
     (creates resource dependency graph)
+terraform import <resource id>
+    (get resources created outside of terraform under the full control of terraform)
 ==================
 
 terraform providers can be found from
@@ -121,7 +123,7 @@ Terraform state
     when first time terraform apply command is run, terraform.tfstate file gets created
     it has complete record of created infra resource into json form
     when any changes, it compares with state file and mofifies resources
-    while removing resouces, it would check from previous state for any dependencies and determine order of destroy accordingly
+    while removing resources, it would check from previous state for any dependencies and determine order of destroy accordingly
     uses state to verify real world infra for every apply, this would improve performance
     state is non optional feature
     for maintaining latest states across multiple developers, it can be stored remotly
@@ -146,12 +148,12 @@ Lifecycle rules
         }
 
 Datasources
-    allows terraform to read the data from resouces which are created outside of the terraform
+    allows terraform to read the data from resources which are created outside of the terraform
     this data can be referenced into other resources
 
 Meta Arguments
     can be used into any resource block to change the behaviour of the resources
-    like creating loops or count to create same resouce multiple times
+    like creating loops or count to create same resource multiple times
         add count = 3 in resource block
         resource "local_file" "pet" {
             filename = var.filename[count.index]
@@ -176,3 +178,32 @@ AWS Terraform
     }
     setting credentials in .tf file like above is not recommended as it can be checked into git
     instead it can be set in .aws/credentials or via export command
+
+Terraform Provisioners
+    Allows us to perform task such as running commands or scripts on remote machine or local machine where terraform is installed
+    To perform action on remote server there should be network connectivity like ssh
+    default behaviour is Provisioners run during resource creation however we can configure it to run during destroy
+    by default, when Provisioners fails, apply command fails and resource is marked as tainted
+    we can mark Provisioners script as optional which does not fails the resource creation with apply step
+    Provisioners should be used only when needed as any scripts can be added into it and Terraform can not model it
+    Also it needs connectivity with remote server which always is not desirable
+    Instead its recommended to build custom AMIs
+
+Terraform tainted
+    example: If writing public IP to a file using Provisioners fails, resource is marked as tainted
+    Terraform will retry the tainted resource again after destroying it
+    Even if EC2 is provisioned but Provisioners fails, EC2 will destroyed and Terraform will retry the resource creation
+    There are commands to mark resource as taint and untraint
+
+Terraform Debug
+    Different log levels for Debug
+
+Terraform Modules
+    Creating similar resources would result in duplicate code and limits resusability
+    module can refer to configurations from other directories
+    we can create resources with specific properties and then we can reuse them
+    we can also keep dynamic properties if needed.
+    example: for creating ec2, we can keep instance type same but keep AMI as variable
+    modules are like packages or libraries from other programming languages
+    Modules can also be used from Terraform registry
+    
