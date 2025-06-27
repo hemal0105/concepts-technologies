@@ -1,0 +1,43 @@
+OWASP - Open Web Application Security Project 
+    Every year they release important security measures or findidings
+    They release OWASP top ten every 4 years (https://owasp.org/www-project-top-ten/)
+      
+Spring Security Framework
+    Takes care of most of OWASP guidelines and makes application secure
+    Provides framework and sugesstions for secure application
+
+Steps for Spring Security setup
+    go to start.spring.io
+    select maven, spring boot latest version, add artifact group and name
+    select packaging as jar and java version
+    select add dependencies and add "Spring Web", "Spring Boot DevTools", "Spring Security"
+    select Generate and it will download a zip
+    exctract zip and open it in IntelliJ
+    Run the Spring boot project in IntelliJ
+    when any RestController api is called it will be prompted with login form
+    User name is "user" and pwd would be shown in logs during app startup
+    pwd is for development only for single user
+    we can logout the seesion with /logout endpoint
+    username and pwd can be set from application.properties for super user but actual user's creds can be fetched from DB
+
+Spring Security internals
+    all RestController are internally converted to servlet 
+    Before servlet gets called, there are DispatcherServlet (front Controller)
+    Even before servlet, there are Filters and FilterChain
+    Spring Security, add its own Filter Auth internally
+    Under developer tools of browser it can be seen that under cookie it adds JSESSIONID with alphanum id as value
+
+CSRF - Cross-ste Request Forgery
+    Some malicious website cant exctact session ids and call APIs with it due to CSRF
+    spring security by default allows HTTP GET
+    spring security generates CSRF token internally
+        it can be viewed in browser's view page source with _csrf hidden tag
+        it can be get from HTTPServletRequest attributes
+    csrf token is needed to perform PUT, POST, DELETE HTTP methods
+    we can also disable CSRF completely if everytime new session is generated or same site stricness is enabled
+    
+
+
+
+
+
